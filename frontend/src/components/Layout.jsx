@@ -8,7 +8,8 @@ import {
   Settings,
   LogOut,
   Menu,
-  X
+  X,
+  Radio
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -17,6 +18,7 @@ const navItems = [
   { to: '/networks', label: 'Networks', icon: Network },
   { to: '/metrics', label: 'Metrics', icon: BarChart3 },
   { to: '/predictions', label: 'Predictions', icon: Brain },
+  { to: '/simulation', label: 'Simulation', icon: Radio },
   { to: '/settings', label: 'Settings', icon: Settings },
 ]
 

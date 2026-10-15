@@ -8,6 +8,7 @@ import Networks from './pages/Networks'
 import Metrics from './pages/Metrics'
 import Predictions from './pages/Predictions'
 import Settings from './pages/Settings'
+import Simulation from './pages/Simulation'
 
 function PrivateRoute({ children }) {
   const { operator, loading } = useAuth()
@@ -38,6 +39,7 @@ function App() {
         <Route path="networks" element={<Networks />} />
         <Route path="metrics" element={<Metrics />} />
         <Route path="predictions" element={<Predictions />} />
+        <Route path="simulation" element={<Simulation />} />
         <Route path="settings" element={<Settings />} />
       </Route>
     </Routes>
