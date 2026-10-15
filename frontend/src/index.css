@@ -4,11 +4,12 @@
 
 body {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 @layer components {
   .btn {
-    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply px-4 py-2.5 rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-[0.98];
   }
   .btn-primary {
     @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
@@ -20,12 +21,23 @@ body {
     @apply btn bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
   }
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6;
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100/80 p-6;
   }
   .input {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+    @apply w-full px-3.5 py-2.5 border border-gray-200 rounded-xl bg-white shadow-sm
+           focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500
+           transition-all placeholder:text-gray-400;
   }
   .label {
-    @apply block text-sm font-medium text-gray-700 mb-1;
+    @apply block text-sm font-medium text-gray-700 mb-1.5;
   }
+}
+
+/* Hide native select arrows globally where we still have any leftovers */
+select.input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.5rem;
 }

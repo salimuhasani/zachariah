@@ -44,7 +44,7 @@ export default function Networks() {
           <h1 className="text-2xl font-bold text-gray-900">Networks</h1>
           <p className="text-gray-500 mt-1">Manage network areas you monitor</p>
         </div>
-        <button onClick={() => setShowModal(true)} className="btn-primary flex items-center gap-2">
+        <button onClick={() => setShowModal(true)} className="btn-primary flex items-center gap-2 shadow-md shadow-primary-200">
           <Plus className="w-4 h-4" /> Add Network
         </button>
       </div>
@@ -63,7 +63,7 @@ export default function Networks() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {networks.map((net) => (
-            <div key={net.id} className="card hover:shadow-md transition-shadow">
+            <div key={net.id} className="card hover:shadow-lg hover:border-primary-200 transition-all duration-200 group">
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="font-semibold text-gray-900">{net.name}</h3>
@@ -92,15 +92,15 @@ export default function Networks() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
-            <div className="flex items-center justify-between mb-5">
-              <h2 className="text-lg font-semibold">Add Network</h2>
-              <button onClick={() => setShowModal(false)} className="p-1 hover:bg-gray-100 rounded">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+              <h2 className="text-lg font-semibold text-gray-900">Add Network</h2>
+              <button onClick={() => setShowModal(false)} className="p-2 rounded-lg hover:bg-gray-100 text-gray-400">
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <form onSubmit={handleCreate} className="space-y-4">
+            <form onSubmit={handleCreate} className="p-6 space-y-4">
               {error && <div className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">{error}</div>}
               <div>
                 <label className="label">Network Name *</label>

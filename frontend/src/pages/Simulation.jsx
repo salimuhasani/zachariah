@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { networksAPI, metricsAPI, predictionsAPI } from '../services/api'
+import CustomSelect from '../components/CustomSelect'
 import {
   Radio, Users, Plus, Minus, Activity, Gauge, Wifi, AlertTriangle,
   CheckCircle, TrendingUp, TrendingDown, Save, Brain, Loader2,
@@ -269,12 +270,16 @@ export default function Simulation() {
         <div className="flex flex-col sm:flex-row sm:items-end gap-4">
           <div className="flex-1">
             <label className="label">Select Network Site</label>
-            <select className="input" value={selectedNetworkId} onChange={(e) => setSelectedNetworkId(e.target.value)}>
-              {networks.length === 0 && <option value="">No networks — create one under Networks first</option>}
-              {networks.map((n) => (
-                <option key={n.id} value={n.id}>{n.name} — {n.area}</option>
-              ))}
-            </select>
+            <CustomSelect
+              value={selectedNetworkId}
+              onChange={(v) => setSelectedNetworkId(String(v))}
+              placeholder="No networks — create one under Networks first"
+              options={networks.map((n) => ({
+                value: String(n.id),
+                label: n.name,
+                sublabel: n.area,
+              }))}
+            />
           </div>
           {selectedNetwork && (
             <div className="text-sm text-gray-500 pb-2 flex items-center gap-2">
