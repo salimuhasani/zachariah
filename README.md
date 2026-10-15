@@ -1,132 +1,114 @@
-# Network Performance Prediction System
+# Network Performance Prediction & Congestion Management System
 
-Mfumo wa kutabiri **Performance Degradation** na **Network Congestion** kwa Operators.
+Enterprise-ready platform for **NOC Operators** to monitor, simulate, and predict network performance degradation and congestion.
 
-## Features
-
-- Multi-operator (kila operator ana data yake)
-- Data input **mbili**:
-  - Manual (kupitia Dashboard)
-  - API (kutoka system yako kwa kutumia `X-API-Key`)
-- Prediction yenye **horizon** inayochaguliwa (1–30 siku)
-- Dashboard nzuri ya React
-- Risk levels: Low / Medium / High / Critical
-
-## Factors zinazotumika
-
-| Factor            | Description              |
-|-------------------|--------------------------|
-| Active Users      | Idadi ya watumiaji       |
-| Traffic (GB)      | Traffic volume           |
-| PRB Utilization % | Physical Resource Block  |
-| Latency (ms)      | Network latency          |
-| Packet Loss %     | Packet loss rate         |
-| Throughput (Mbps) | Data throughput          |
-
-## Tech Stack
-
-- **Backend**: FastAPI + PostgreSQL + scikit-learn
-- **Frontend**: React (Vite) + Tailwind CSS + Recharts
-- **Auth**: JWT + API Key
-- **Deploy**: Railway + GitHub
+Built for telecom operators, ISPs, and network operations centres.
 
 ---
 
-## Local Development
+## Core Capabilities
 
-### 1. Backend
+| Module | Description |
+|--------|-------------|
+| **Networks** | Register and manage radio sites / areas |
+| **Metrics** | Daily KPI ingestion (manual or API) |
+| **Simulation** | Live tower simulation — change Active Users and see PRB, Latency, Packet Loss, Throughput react in real time |
+| **Predictions** | AI-assisted risk forecast (1–30 day horizon) with Risk Level + actionable recommendations |
+| **Dashboard** | Executive overview of all sites and high-risk alerts |
+| **API Integration** | Push metrics from existing OSS/BSS via API Key |
 
+## KPI Factors
+
+- Active Users
+- Traffic (GB)
+- PRB Utilization (%)
+- Latency (ms)
+- Packet Loss (%)
+- Throughput (Mbps)
+
+## Risk Levels
+
+`Low` → `Medium` → `High` → `Critical`
+
+Each prediction includes:
+- Risk Score (%)
+- Congestion Probability
+- Performance Degradation Probability
+- Scientific explanation of drivers
+- **Actionable recommendations** for field / NOC teams
+
+---
+
+## Tech Stack
+
+- **Backend**: FastAPI, PostgreSQL, scikit-learn
+- **Frontend**: React (Vite), Tailwind CSS, Recharts, Lucide
+- **Auth**: JWT + per-operator API Key
+- **Deploy**: Railway / Docker ready
+
+---
+
+## Quick Start (Local)
+
+### Backend
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+source venv/bin/activate
 pip install -r requirements.txt
-
-# Set environment (or use .env)
 export DATABASE_URL="postgresql://postgres:postgres@localhost:5432/network_prediction"
-export SECRET_KEY="your-secret-key"
-
+export SECRET_KEY="change-me-in-production"
 uvicorn app.main:app --reload --port 8000
 ```
 
-API docs: http://localhost:8000/docs
-
-### 2. Frontend
-
+### Frontend
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-Dashboard: http://localhost:3000
+Open http://localhost:3000
 
 ---
 
-## Deploy on Railway (GitHub)
+## Operator Workflow
 
-### Step 1: Push to GitHub
-
-```bash
-git init
-git add .
-git commit -m "Initial commit - Network Prediction System"
-git remote add origin https://github.com/YOUR_USERNAME/network-prediction-system.git
-git push -u origin main
-```
-
-### Step 2: Create Railway Project
-
-1. Go to [railway.app](https://railway.app) → New Project
-2. Deploy from GitHub repo
-3. Add **PostgreSQL** service (Railway → New → Database → PostgreSQL)
-4. For **Backend** service:
-   - Root Directory: `backend`
-   - Build: uses Dockerfile
-   - Environment variables:
-     - `DATABASE_URL` → reference from Postgres service
-     - `SECRET_KEY` → generate a strong random string
-     - `PORT` → 8000 (or leave Railway default)
-
-5. For **Frontend** (optional separate service or static):
-   - You can deploy frontend as another Railway service
-   - Or build and serve via any static host
-   - Set `VITE_API_URL` to your backend public URL (e.g. `https://your-backend.up.railway.app/api/v1`)
-
-### Step 3: Connect Services
-
-- Backend service → Variables → Add `DATABASE_URL` from Postgres
-- After deploy, open backend URL + `/docs` to test API
+1. **Register / Login**
+2. **Create Network** (e.g. Site-A-4G, Kinondoni)
+3. **Add Metrics** (manual or via API)
+4. **Simulation** — select the network, change Active Users, observe live KPI impact, save metrics
+5. **Run Prediction** — choose horizon (3 / 7 / 14 / 30 days)
+6. Review Risk Level + recommendations on Dashboard / Predictions
 
 ---
 
-## API Endpoints Summary
+## API (Key Endpoints)
 
-| Method | Endpoint                        | Auth          | Description                |
-|--------|---------------------------------|---------------|----------------------------|
-| POST   | /api/v1/auth/register           | None          | Register operator          |
-| POST   | /api/v1/auth/login              | None          | Login                      |
-| GET    | /api/v1/auth/me                 | JWT           | Current operator           |
-| POST   | /api/v1/networks/               | JWT           | Create network             |
-| GET    | /api/v1/networks/               | JWT           | List networks              |
-| POST   | /api/v1/metrics/                | JWT           | Manual metric entry        |
-| POST   | /api/v1/metrics/api             | X-API-Key     | API metric entry           |
-| POST   | /api/v1/metrics/api/bulk        | X-API-Key     | Bulk API metrics           |
-| POST   | /api/v1/predictions/            | JWT           | Run prediction             |
-| GET    | /api/v1/dashboard/stats         | JWT           | Dashboard stats            |
+| Method | Endpoint | Auth |
+|--------|----------|------|
+| POST | /api/v1/auth/register | — |
+| POST | /api/v1/auth/login | — |
+| POST | /api/v1/networks/ | JWT |
+| POST | /api/v1/metrics/ | JWT |
+| POST | /api/v1/metrics/api | X-API-Key |
+| POST | /api/v1/predictions/ | JWT |
+| GET  | /api/v1/dashboard/stats | JWT |
+
+Full docs: `http://localhost:8000/docs`
 
 ---
 
-## How Operators Use It
+## Why Operators Buy This
 
-1. **Register** → get JWT + API Key
-2. **Create Network** (e.g. "Site-A", Area: "Kinondoni")
-3. **Add Metrics** daily (manual or via API)
-4. **Run Prediction** → choose 1 / 3 / 7 / 14 / 30 days
-5. View risk level + explanation on Dashboard
+- **Proactive** — see congestion before customers complain
+- **Visual Simulation** — demonstrate capacity limits to management
+- **Recommendations** — not just scores, but what to do next
+- **API-first** — fits into existing monitoring pipelines
+- **Multi-tenant** — each operator sees only their data
 
 ---
 
 ## License
 
-MIT – free for operators and telecom teams.
+MIT — free for commercial and internal use.

@@ -54,6 +54,12 @@ def create_prediction(
     latest = history[-1]
     result = run_prediction(latest, history, request.horizon_days)
 
+    # Append actionable recommendations to explanation for NOC operators
+    explanation = result["explanation"]
+    recs = result.get("recommendations") or []
+    if recs:
+        explanation = explanation + " | Recommendations: " + "; ".join(recs[:4])
+
     prediction = models.Prediction(
         network_id=request.network_id,
         operator_id=current.id,
@@ -65,7 +71,7 @@ def create_prediction(
         predicted_prb=result["predicted_prb"],
         predicted_latency=result["predicted_latency"],
         predicted_packet_loss=result["predicted_packet_loss"],
-        explanation=result["explanation"],
+        explanation=explanation,
     )
     db.add(prediction)
     db.commit()

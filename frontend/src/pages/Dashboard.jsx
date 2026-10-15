@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { dashboardAPI } from '../services/api'
-import { Network, BarChart3, AlertTriangle, Activity } from 'lucide-react'
+import { Network, BarChart3, AlertTriangle, Activity, Radio, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const riskColors = {
@@ -78,6 +78,30 @@ export default function Dashboard() {
             <p className="text-2xl font-bold text-gray-900">{stats?.latest_predictions?.length || 0}</p>
           </div>
         </div>
+      </div>
+
+      {/* Quick actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Link to="/simulation" className="card flex items-center gap-4 hover:border-primary-300 hover:shadow-md transition group">
+          <div className="w-12 h-12 rounded-xl bg-primary-50 flex items-center justify-center group-hover:bg-primary-100 transition">
+            <Radio className="w-6 h-6 text-primary-600" />
+          </div>
+          <div className="flex-1">
+            <p className="font-semibold text-gray-900">Tower Simulation</p>
+            <p className="text-sm text-gray-500">Test congestion by changing active users live</p>
+          </div>
+          <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-primary-600 transition" />
+        </Link>
+        <Link to="/predictions" className="card flex items-center gap-4 hover:border-primary-300 hover:shadow-md transition group">
+          <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center group-hover:bg-purple-100 transition">
+            <Activity className="w-6 h-6 text-purple-600" />
+          </div>
+          <div className="flex-1">
+            <p className="font-semibold text-gray-900">Run Prediction</p>
+            <p className="text-sm text-gray-500">Forecast risk 1–30 days ahead with AI</p>
+          </div>
+          <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-primary-600 transition" />
+        </Link>
       </div>
 
       {/* Networks Overview */}
