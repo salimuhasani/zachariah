@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Network } from 'lucide-react'
+import { Network, Shield } from 'lucide-react'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -39,7 +39,7 @@ export default function Login() {
         <div className="card">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="bg-red-50 text-red-700 text-sm px-4 py-3 rounded-lg border border-red-100">
+              <div className="bg-red-50 text-red-700 text-sm px-4 py-3 rounded-xl border border-red-100">
                 {error}
               </div>
             )}
@@ -51,7 +51,8 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                placeholder="operator@company.com"
+                placeholder="zachariah@gmail.com"
+                autoComplete="username"
               />
             </div>
             <div>
@@ -63,18 +64,17 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="••••••••"
+                autoComplete="current-password"
               />
             </div>
             <button type="submit" disabled={loading} className="btn-primary w-full py-2.5">
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? 'Signing in…' : 'Sign In'}
             </button>
           </form>
-          <p className="text-center text-sm text-gray-500 mt-6">
-            Don't have an account?{' '}
-            <Link to="/register" className="text-primary-600 font-medium hover:underline">
-              Register
-            </Link>
-          </p>
+          <div className="mt-6 flex items-start gap-2 text-xs text-gray-400 bg-gray-50 rounded-xl px-3 py-2.5">
+            <Shield className="w-3.5 h-3.5 mt-0.5 shrink-0 text-gray-400" />
+            <p>Accounts are created by an administrator only. Public registration is disabled.</p>
+          </div>
         </div>
       </div>
     </div>

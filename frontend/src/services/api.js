@@ -32,7 +32,6 @@ api.interceptors.response.use(
 )
 
 export const authAPI = {
-  register: (data) => api.post('/auth/register', data),
   login: (email, password) => {
     const form = new URLSearchParams()
     form.append('username', email)
@@ -43,6 +42,9 @@ export const authAPI = {
   },
   me: () => api.get('/auth/me'),
   regenerateApiKey: () => api.post('/auth/regenerate-api-key'),
+  updateProfile: (data) => api.put('/auth/profile', data),
+  createOperator: (data) => api.post('/auth/operators', data),
+  listOperators: () => api.get('/auth/operators'),
 }
 
 export const networksAPI = {
